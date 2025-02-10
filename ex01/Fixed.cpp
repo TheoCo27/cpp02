@@ -6,7 +6,7 @@
 /*   By: theog <theog@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:46 by theog             #+#    #+#             */
-/*   Updated: 2025/02/10 05:20:16 by theog            ###   ########.fr       */
+/*   Updated: 2025/02/10 14:44:13 by theog            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,21 @@ Fixed::Fixed(const int f_value)
 }
 Fixed::Fixed(const float f_value)
 {
+    long temp;
+
     std::cout << "Float constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
         std::cerr << "Compilation error: value out of range 8,388,608!" << std::endl;
         std::exit(EXIT_FAILURE); // Arrête le programme à la compilation
     }
-    _RawBits = roundf(f_value * (1 << _Nb_decimal_bits));
+    temp = roundf(f_value * (1 << _Nb_decimal_bits));
+    if (temp > 2147483647 || temp < -2147483648) 
+    {
+        std::cerr << "Compilation error: Rawbits exceed int range" << std::endl;
+        std::exit(EXIT_FAILURE); // Arrête le programme à la compilation
+    }
+    _RawBits = (int)temp;   
 }
 float Fixed::toFloat( void ) const
 {
@@ -79,10 +87,29 @@ void Fixed::setRawBits(int const raw)
     std::cout << "SetRawBits member function called" << std::endl;
 }
 
+bool check_if_decimal(int data)
+{
+    int mask = 1;
+    int i = 0;
+
+    while(i < 8)
+    {
+        if (data & mask)
+            return (1);
+        i++;
+        mask = mask << 1;
+    }
+    return (0);
+}
+
 std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
 {
     //faire une comparaison binaire pour savoir si partie decimal vide ou non
     //out << fixed.toInt();
-    out << std::fixed << std::setprecision(2) << fixed.toFloat();  // Utilisation de la méthode publique toFloat()
+    if (check_if_decimal(fixed.getRawBits()) == 1)
+        out << fixed.toFloat();
+    else
+        out << fixed.toInt();
+   // out << std::fixed << std::setprecision(2) << fixed.toFloat();  // Utilisation de la méthode publique toFloat()
     return out;
 }
