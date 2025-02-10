@@ -6,7 +6,7 @@
 /*   By: theog <theog@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:43 by theog             #+#    #+#             */
-/*   Updated: 2025/02/05 17:46:11 by theog            ###   ########.fr       */
+/*   Updated: 2025/02/08 11:26:48 by theog            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Fixed
         static const int _RawBits;
     public:
         Fixed(void);
-        Fixed(int f_value);
+       // Fixed(int f_value);
         Fixed(const Fixed& to_copy);
         Fixed& operator=(const Fixed& other);
         ~Fixed(void);
