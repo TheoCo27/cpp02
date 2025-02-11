@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.cpp                                          :+:      :+:    :+:   */
+/*   FixedNoPrint.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcohen <tcohen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:46 by theog             #+#    #+#             */
-/*   Updated: 2025/02/11 17:45:20 by tcohen           ###   ########.fr       */
+/*   Updated: 2025/02/11 21:36:11 by tcohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <cmath>
+#include "Fixed.hpp"
+#include <cmath>
 
 const int Fixed::_Nb_decimal_bits = 8;
 
-// constructeur
-
 Fixed::Fixed(void) : _RawBits(0)
 {
-    std::cout << "Default constructor called" << std::endl;
+
 }
+
 Fixed::Fixed(const int f_value)
 {
-    std::cout << "Int constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
         std::cout << "Value out of range 8,388,607!\nValue has been reset to zero" << std::endl;
@@ -32,11 +32,11 @@ Fixed::Fixed(const int f_value)
     }
     _RawBits = f_value << _Nb_decimal_bits;
 }
+
 Fixed::Fixed(const float f_value)
 {
     long temp;
 
-    std::cout << "Float constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
         std::cout << "Value out of range 8,388,607!\nValue has been reset to zero" << std::endl;
@@ -53,44 +53,40 @@ Fixed::Fixed(const float f_value)
     }
     _RawBits = (int)temp;   
 }
+
+float Fixed::toFloat( void ) const
+{
+    return ((float)(_RawBits) / (float)(1 << _Nb_decimal_bits));
+}
+int Fixed::toInt( void ) const
+{
+    return (_RawBits >> _Nb_decimal_bits);
+}
 Fixed::Fixed(const Fixed& to_copy)
 {
-    std::cout << "Copy constructor called" << std::endl;
     *this = to_copy;
 }
-
-//operateurs canon
 Fixed& Fixed::operator=(const Fixed& other)
 {
-    std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)
     {
-        this->_RawBits = other.getRawBits();
+        this->_RawBits = other._RawBits;
 
     }
     return (*this);
 }
-//destructeur
 Fixed::~Fixed(void)
 {
-    std::cout << "Destructor called" << std::endl;
 }
-
-//getter
 int Fixed::getRawBits(void) const
 {
-    std::cout << "getRawBits member function called" << std::endl;
     return (_RawBits);
 }
-
-//setter
 void Fixed::setRawBits(int const raw)
-{   
+{
     _RawBits = raw;
-    std::cout << "SetRawBits member function called" << std::endl;
 }
 
-//fonctions d aide
 bool check_if_decimal(int data)
 {
     int mask = 1;
@@ -106,30 +102,18 @@ bool check_if_decimal(int data)
     return (0);
 }
 
-
-//convertisseurs
-float Fixed::toFloat( void ) const
-{
-	return ((float)(_RawBits) / (float)(1 << _Nb_decimal_bits));
-}
-
-
-int Fixed::toInt( void ) const
-{
-	return (_RawBits >> _Nb_decimal_bits);
-}
-
-//operateurs
 std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
 {
-	//faire une comparaison binaire pour savoir si partie decimal vide ou non
-	//out << fixed.toInt();
-	if (check_if_decimal(fixed.getRawBits()) == 1)
-		out << fixed.toFloat();
-	else
-		out << fixed.toInt();
-// out << std::fixed << std::setprecision(2) << fixed.toFloat();  // Utilisation de la méthode publique toFloat()
-	return out;
+    //faire une comparaison binaire pour savoir si partie decimal vide ou non
+    //out << fixed.toInt();
+    // if (check_if_decimal(fixed.getRawBits()) == 1)
+    //     out << fixed.toFloat();
+    // else
+    //     out << fixed.toInt();
+   // out << std::fixed << std::setprecision(2) << fixed.toFloat(); 
+    // Utilisation de la méthode publique toFloat()
+	out << fixed.toFloat();
+    return out;
 }
 
 bool Fixed::operator>(const Fixed& other) const
@@ -217,4 +201,34 @@ Fixed& Fixed::operator--(void)
 {
 	this->_RawBits--;
 	return (*this);
+}
+
+Fixed& Fixed::min(Fixed& nb_a, Fixed& nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_b);
+	else
+		return (nb_a);
+}
+Fixed& Fixed::max(Fixed& nb_a, Fixed& nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_a);
+	else
+		return (nb_b);
+}
+
+const Fixed& Fixed::min(Fixed const &nb_a, Fixed const &nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_b);
+	else
+		return (nb_a);
+}
+const Fixed& Fixed::max(Fixed const &nb_a, Fixed const &nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_a);
+	else
+		return (nb_b);
 }

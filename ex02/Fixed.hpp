@@ -6,7 +6,7 @@
 /*   By: tcohen <tcohen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:43 by theog             #+#    #+#             */
-/*   Updated: 2025/02/11 18:32:09 by tcohen           ###   ########.fr       */
+/*   Updated: 2025/02/11 21:15:49 by tcohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #define __FIXED_HPP__
 
 #include <iostream>
+# define _MaxInt 8388607
+# define _MinInt -8388608
 
 class Fixed
 {
     private:
         int _RawBits;
         static const int _Nb_decimal_bits;
-        static const int _MaxInt = 8388607;
-        static const int _MinInt = -8388608;
     public:
 		Fixed(void);
 		Fixed(const int f_value);

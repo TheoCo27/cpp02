@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: theog <theog@student.42.fr>                +#+  +:+       +#+         #
+#    By: tcohen <tcohen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:22:59 by theog             #+#    #+#              #
-#    Updated: 2025/02/10 17:23:19 by theog            ###   ########.fr        #
+#    Updated: 2025/02/11 21:45:35 by tcohen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ clean:
 
 # Nettoyage complet (obj + binaire)
 fclean: clean
-	rm -f $(NAME) a.out
+	rm -f $(NAME)
 
 # Recompilation complète
 re: fclean all
