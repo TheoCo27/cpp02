@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.cpp                                          :+:      :+:    :+:   */
+/*   Fixed1.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcohen <tcohen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:46 by theog             #+#    #+#             */
-/*   Updated: 2025/02/11 17:45:20 by tcohen           ###   ########.fr       */
+/*   Updated: 2025/02/11 18:37:14 by tcohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ const int Fixed::_Nb_decimal_bits = 8;
 
 Fixed::Fixed(void) : _RawBits(0)
 {
-    std::cout << "Default constructor called" << std::endl;
+    //std::cout << "Default constructor called" << std::endl;
 }
 Fixed::Fixed(const int f_value)
 {
-    std::cout << "Int constructor called" << std::endl;
+    //std::cout << "Int constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
         std::cout << "Value out of range 8,388,607!\nValue has been reset to zero" << std::endl;
@@ -36,7 +36,7 @@ Fixed::Fixed(const float f_value)
 {
     long temp;
 
-    std::cout << "Float constructor called" << std::endl;
+    //std::cout << "Float constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
         std::cout << "Value out of range 8,388,607!\nValue has been reset to zero" << std::endl;
@@ -55,14 +55,14 @@ Fixed::Fixed(const float f_value)
 }
 Fixed::Fixed(const Fixed& to_copy)
 {
-    std::cout << "Copy constructor called" << std::endl;
+    //std::cout << "Copy constructor called" << std::endl;
     *this = to_copy;
 }
 
 //operateurs canon
 Fixed& Fixed::operator=(const Fixed& other)
 {
-    std::cout << "Copy assignment operator called" << std::endl;
+    //std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)
     {
         this->_RawBits = other.getRawBits();
@@ -73,13 +73,13 @@ Fixed& Fixed::operator=(const Fixed& other)
 //destructeur
 Fixed::~Fixed(void)
 {
-    std::cout << "Destructor called" << std::endl;
+    //std::cout << "Destructor called" << std::endl;
 }
 
 //getter
 int Fixed::getRawBits(void) const
 {
-    std::cout << "getRawBits member function called" << std::endl;
+   // std::cout << "getRawBits member function called" << std::endl;
     return (_RawBits);
 }
 
@@ -87,7 +87,7 @@ int Fixed::getRawBits(void) const
 void Fixed::setRawBits(int const raw)
 {   
     _RawBits = raw;
-    std::cout << "SetRawBits member function called" << std::endl;
+    //std::cout << "SetRawBits member function called" << std::endl;
 }
 
 //fonctions d aide
@@ -217,4 +217,34 @@ Fixed& Fixed::operator--(void)
 {
 	this->_RawBits--;
 	return (*this);
+}
+
+Fixed& Fixed::min(Fixed& nb_a, Fixed& nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_b);
+	else
+		return (nb_a);
+}
+Fixed& Fixed::max(Fixed& nb_a, Fixed& nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_a);
+	else
+		return (nb_b);
+}
+
+const Fixed& Fixed::min(Fixed const &nb_a, Fixed const &nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_b);
+	else
+		return (nb_a);
+}
+const Fixed& Fixed::max(Fixed const &nb_a, Fixed const &nb_b)
+{
+	if (nb_a.toFloat() > nb_b.toFloat())
+		return (nb_a);
+	else
+		return (nb_b);
 }

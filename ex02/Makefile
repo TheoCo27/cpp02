@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: theog <theog@student.42.fr>                +#+  +:+       +#+         #
+#    By: tcohen <tcohen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:23:13 by theog             #+#    #+#              #
-#    Updated: 2025/02/10 17:23:16 by theog            ###   ########.fr        #
+#    Updated: 2025/02/11 17:48:04 by tcohen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp Fixed.cpp
+SRCS = main.cpp Fixed1.cpp
 OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 NAME = FixedPoint
