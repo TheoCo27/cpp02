@@ -6,13 +6,12 @@
 /*   By: theog <theog@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:46 by theog             #+#    #+#             */
-/*   Updated: 2025/02/10 14:44:13 by theog            ###   ########.fr       */
+/*   Updated: 2025/02/10 17:19:24 by theog            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <cmath>
-#include <iomanip>
 
 const int Fixed::_Nb_decimal_bits = 8;
 
@@ -23,11 +22,10 @@ Fixed::Fixed(void) : _RawBits(0)
 Fixed::Fixed(const int f_value)
 {
     std::cout << "Int constructor called" << std::endl;
-    static_assert(_MaxInt <= 8388607, "Max value exceeds the allowed limit!");
     if (f_value > _MaxInt || f_value < _MinInt)
     {
-        std::cerr << "Compilation error: value out of range 8,388,608!" << std::endl;
-        std::exit(EXIT_FAILURE); // Arrête le programme à la compilation
+        std::cout << "Value out of range 8,388,607!" << std::endl;
+        std::exit(EXIT_FAILURE);
     }
     _RawBits = f_value << _Nb_decimal_bits;
 }
@@ -38,14 +36,14 @@ Fixed::Fixed(const float f_value)
     std::cout << "Float constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
-        std::cerr << "Compilation error: value out of range 8,388,608!" << std::endl;
-        std::exit(EXIT_FAILURE); // Arrête le programme à la compilation
+        std::cout << "value out of range 8,388,607!" << std::endl;
+        std::exit(EXIT_FAILURE); 
     }
     temp = roundf(f_value * (1 << _Nb_decimal_bits));
     if (temp > 2147483647 || temp < -2147483648) 
     {
-        std::cerr << "Compilation error: Rawbits exceed int range" << std::endl;
-        std::exit(EXIT_FAILURE); // Arrête le programme à la compilation
+        std::cout << "Rawbits exceed int range" << std::endl;
+        std::exit(EXIT_FAILURE); 
     }
     _RawBits = (int)temp;   
 }

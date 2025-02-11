@@ -6,7 +6,7 @@
 /*   By: theog <theog@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:48 by theog             #+#    #+#             */
-/*   Updated: 2025/02/10 14:36:45 by theog            ###   ########.fr       */
+/*   Updated: 2025/02/10 15:28:56 by theog            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int main(void)
 {
-	Fixed int_a(8388607), float_a((float)1.75);
+	Fixed int_a(838861), float_a(1.7775f);
 	int a = int_a.toInt();
 	float b = float_a.toFloat();
 	std::cout << a << std::endl;
