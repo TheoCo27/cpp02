@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theog <theog@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcohen <tcohen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:51:46 by theog             #+#    #+#             */
-/*   Updated: 2025/02/10 17:19:24 by theog            ###   ########.fr       */
+/*   Updated: 2025/02/11 21:11:32 by tcohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ Fixed::Fixed(const int f_value)
     std::cout << "Int constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
-        std::cout << "Value out of range 8,388,607!" << std::endl;
-        std::exit(EXIT_FAILURE);
+        std::cout << "Value out of range 8,388,607!\nValue has been reset to zero" << std::endl;
+        _RawBits = 0;
+		return;
     }
     _RawBits = f_value << _Nb_decimal_bits;
 }
@@ -36,14 +37,17 @@ Fixed::Fixed(const float f_value)
     std::cout << "Float constructor called" << std::endl;
     if (f_value > _MaxInt || f_value < _MinInt)
     {
-        std::cout << "value out of range 8,388,607!" << std::endl;
-        std::exit(EXIT_FAILURE); 
+        std::cout << "Value out of range 8,388,607!\nValue has been reset to zero" << std::endl;
+        _RawBits = 0;
+		return;
     }
     temp = roundf(f_value * (1 << _Nb_decimal_bits));
     if (temp > 2147483647 || temp < -2147483648) 
     {
         std::cout << "Rawbits exceed int range" << std::endl;
-        std::exit(EXIT_FAILURE); 
+        std::cout << "Value has been reset to zero" << std::endl;
+        _RawBits = 0;
+		return;
     }
     _RawBits = (int)temp;   
 }
@@ -65,7 +69,7 @@ Fixed& Fixed::operator=(const Fixed& other)
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)
     {
-        this->_RawBits = other.getRawBits();
+        this->_RawBits = other._RawBits;
 
     }
     return (*this);
@@ -80,9 +84,9 @@ int Fixed::getRawBits(void) const
     return (_RawBits);
 }
 void Fixed::setRawBits(int const raw)
-{   
+{
+	std::cout << "SetRawBits member function called" << std::endl;   
     _RawBits = raw;
-    std::cout << "SetRawBits member function called" << std::endl;
 }
 
 bool check_if_decimal(int data)
@@ -104,10 +108,12 @@ std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
 {
     //faire une comparaison binaire pour savoir si partie decimal vide ou non
     //out << fixed.toInt();
-    if (check_if_decimal(fixed.getRawBits()) == 1)
-        out << fixed.toFloat();
-    else
-        out << fixed.toInt();
-   // out << std::fixed << std::setprecision(2) << fixed.toFloat();  // Utilisation de la méthode publique toFloat()
+    // if (check_if_decimal(fixed.getRawBits()) == 1)
+    //     out << fixed.toFloat();
+    // else
+    //     out << fixed.toInt();
+   // out << std::fixed << std::setprecision(2) << fixed.toFloat(); 
+    // Utilisation de la méthode publique toFloat()
+	out << fixed.toFloat();
     return out;
 }
